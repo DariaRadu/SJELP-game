@@ -1,0 +1,8 @@
+{
+  "framerate":3,
+  "images":["img/explosion_transparent.png"],
+  "frames": {"width":64, "height":64, "regX":0, "regY":0},
+  "animations": {
+    "explode":[0,23, null]
+  }
+}

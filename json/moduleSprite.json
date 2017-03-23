@@ -1,0 +1,10 @@
+{
+  "images":["img/train.jpg"],
+  "frames": {"width":220, "height":112},
+  "animations": {
+    "module1":[1],
+    "module2":[2],
+    "module3":[3]
+  }
+
+}

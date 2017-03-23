@@ -1,0 +1,17 @@
+canvas{
+    background-color:white;
+    display:block;
+}
+body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+canvas.preloadDone {
+    opacity:0;
+
+}
+canvas.preloadDone.show {
+    opacity:1;
+    transition:opacity 0.5s;
+}
