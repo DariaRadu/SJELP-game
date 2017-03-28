@@ -1,0 +1,74 @@
+$time:0.7s;
+
+canvas{
+  background-color:white;
+  display:none;
+}
+body{
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  /*position:relative;*/
+}
+canvas.preloadDone {
+  opacity:0;
+
+}
+canvas.preloadDone.show {
+  opacity:1;
+  transition:opacity 0.5s;
+}
+
+.logo{
+  margin:0 auto;
+  max-width:30%;
+  opacity:0;
+}
+
+.initial-text{
+  opacity:0;
+}
+
+.logo-screen{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
+.choice-screen{
+  @extend .logo-screen;
+  opacity:0;
+  transition:opacity $time;
+}
+
+.button-choice{
+  width:200px;
+  border-radius:20px;
+  border: 1px black solid;
+  margin-top:5px;
+  margin-bottom:5px;
+  background-color:white;
+}
+
+#choiceGame{
+  background-color:gray;
+  color:white;
+}
+
+.in-view{
+  opacity:1;
+}
+
+.out-of-view{
+  opacity:0;
+}
+
+.transition-opacity{
+  transition:opacity $time;
+}
+
+.not-displayed{
+  display:none;
+}

@@ -57,15 +57,14 @@ function UpScene3(){
 
 function showLogo(){
     stage.removeChild(rocket);
-
     logo = new createjs.Bitmap (queue.getResult("logo"));
     logo.width=400;
     logo.height=400;
     logo.regX=logo.width/2;
     logo.regY=logo.height/2;
+    logo.alpha=0;
     logo.x=stage.canvas.width/2;
     logo.y=stage.canvas.height/2;
-    logo.alpha=0;
 
     stage.addChild(logo);
 

@@ -27,17 +27,16 @@ function init() {
     }
 
     createBackground();
+
     resize();
-    backgroundOpacity(0.2);
+    //backgroundOpacity(0.2);
 
     createjs.Ticker.setFPS(60);
     createjs.Ticker.addEventListener('tick', tock);
 
     stage.enableMouseOver();
 
-    firstText = new createjs.Text("Build your own spaceship!", "30px Verdana", "#000");
-    firstText.textAlign="center";
-    firstText.textBaseline="middle";
+    /*firstText = new createjs.Text("Build your", "30px Arial Black", "#FFF");
 
     skipButton = new createjs.Bitmap(queue.getResult("skip"));
     skipButton.scaleX=0.5;
@@ -49,19 +48,22 @@ function init() {
 
     goButton.addEventListener("click", game);
 
-    stage.addChild(firstText, skipButton, goButton);
+    stage.addChild(firstText, skipButton, goButton, logo);*/
+    game();
+
 
 }
 
 function game(){
-    document.querySelector('#demoCanvas').classList.remove('preloadDone', "show");
-    document.querySelector('#demoCanvas').classList.add('preloadDone');
+    /*document.querySelector('#demoCanvas').classList.remove('preloadDone', "show");
+    document.querySelector('#demoCanvas').classList.add('preloadDone');*/
     setTimeout(function(){
         document.querySelector('#demoCanvas').classList.add('show');
     }, 300);
 
     stage.removeChild(firstText, skipButton,goButton);
 
+    createClouds();
     backgroundOpacity(1);
     createContent();
     resize();
@@ -92,7 +94,10 @@ function tock() {
         backgroundEffect(4);
         cloudEffect(4);
     }
-    cloudEffect(1);
+    if(cloudA){
+        cloudEffect(1);
+    }
+
 
     stage.update();
 
@@ -122,24 +127,12 @@ function resize() {
         bg2.scaleX = parseFloat(stage.canvas.width / bg.img.width);
         bg2.scaleY = parseFloat(stage.canvas.height / bg.img.height);
 
-        backgroundResize(cloudA);
-        cloudA.x=0;
-
-        backgroundResize(cloudA2);
-        cloudA2.x=stage.canvas.width;
-
-        backgroundResize(cloudB);
-        cloudB.x=stage.canvas.width/4;
-
-        backgroundResize(cloudB2);
-        cloudB2.x=stage.canvas.width+stage.canvas.width/4;
-
         resizeContent();
     },200);
 
 }
 
-
+//BACKGROUND
 function createBackground() {
     bg = new createjs.Shape();
     bg.x=0;
@@ -148,6 +141,12 @@ function createBackground() {
     bg2 = new createjs.Shape();
     bg2.x=stage.canvas.width;
 
+
+    stage.addChild(bg, bg2);
+
+}
+
+function createClouds(){
     cloudA = new createjs.Shape();
     cloudA.x=0;
     cloudA.img=queue.getResult('cloudA');
@@ -164,32 +163,7 @@ function createBackground() {
     cloudB2.x=stage.canvas.width;
     cloudB2.img=queue.getResult('cloudB');
 
-    stage.addChild(bg, bg2, cloudA, cloudA2, cloudB, cloudB2);
-
-}
-
-
-function createContent() {
-
-    train = new createjs.Shape();
-    train.width=400;
-    train.height=100;
-    train.graphics.beginFill("#ffe500").drawRect(0,0,train.width,train.height);
-    train.speed=6;
-
-    platform = new createjs.Shape();
-    platform.width=500;
-    platform.height=20;
-    platform.graphics.beginFill("#ffe500").drawRect(0,0,platform.width,platform.height);
-
-    gun = new createjs.Shape();
-    gun.width=50;
-    gun.height=50;
-    gun.regX=gun.width/2;
-    gun.regY=gun.height/2;
-    gun.graphics.beginFill('red').drawRect(0,0,gun.width,gun.height);
-
-    stage.addChild(train, gun, platform)
+    stage.addChild(cloudA, cloudA2, cloudB, cloudB2);
 
 }
 
@@ -216,11 +190,11 @@ function backgroundOpacity(n){
     bg.alpha=n;
     bg2.alpha=n;
 
-    cloudA.alpha=n;
+    /*cloudA.alpha=n;
     cloudA2.alpha=n;
 
     cloudB.alpha=n;
-    cloudB2.alpha=n;
+    cloudB2.alpha=n;*/
 }
 
 function cloudEffect(speed){
@@ -243,8 +217,49 @@ function cloudEffect(speed){
     }
 }
 
+//CONTENT
+
+function createContent() {
+
+    train = new createjs.Shape();
+    train.width=400;
+    train.height=100;
+    train.graphics.beginFill("#ffe500").drawRect(0,0,train.width,train.height);
+    train.speed=6;
+
+    platform = new createjs.Shape();
+    platform.width=500;
+    platform.height=20;
+    platform.graphics.beginFill("#ffe500").drawRect(0,0,platform.width,platform.height);
+
+    gun = new createjs.Shape();
+    gun.width=50;
+    gun.height=50;
+    gun.regX=gun.width/2;
+    gun.regY=gun.height/2;
+    gun.graphics.beginFill('red').drawRect(0,0,gun.width,gun.height);
+
+    stage.addChild(train, gun, platform)
+
+}
+
+
 
 function resizeContent(){
+    if (cloudA){
+        backgroundResize(cloudA);
+        cloudA.x=0;
+
+        backgroundResize(cloudA2);
+        cloudA2.x=stage.canvas.width;
+
+        backgroundResize(cloudB);
+        cloudB.x=stage.canvas.width/4;
+
+        backgroundResize(cloudB2);
+        cloudB2.x=stage.canvas.width+stage.canvas.width/4;
+    }
+
     if (train){
         if (arrived || moveToRocket){
             train.x = stage.canvas.width / 2-150;
@@ -331,14 +346,19 @@ function resizeContent(){
         startText.y=buttonStart.y-buttonStart.height/2;
     }
 
-    firstText.x=stage.canvas.width/2;
-    firstText.y=stage.canvas.height/2-100;
+   /* if (firstText){
+        firstText.x=stage.canvas.width/2;
+        firstText.y=stage.canvas.height/2;
+    }
 
-    skipButton.x=firstText.x+50;
-    skipButton.y=firstText.y+50;
+    if(skipButton){
+        skipButton.x=firstText.x+50;
+        skipButton.y=firstText.y+50;
 
-    goButton.x=firstText.x-150;
-    goButton.y=skipButton.y+30;
+        goButton.x=firstText.x-150;
+        goButton.y=skipButton.y+30;
+    }
+*/
 
     if (cloudBig){
         cloudBig.x=stage.canvas.width/2;

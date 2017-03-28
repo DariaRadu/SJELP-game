@@ -2,17 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
-    <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>-->
-    <script src="js/preload.js"></script>
-    <script src="js/firstScene.js"></script>
-    <script src="js/main.js"></script>
-    <title>Title</title>
+    <!--<script src="js/firstScene.js"></script>
+    <script src="js/main.js"></script>-->
+    <title>Game Test</title>
 </head>
-<body onload="preload()">
+<body>
+    <div id="initialScreen">
+        <div class="logo-screen">
+            <img class="img-responsive logo" src="img/logo.png">
+            <div class="initial-text text-center">
+                <h1>SJELP</h1>
+                <h2>- Coworking Space App -</h2>
+            </div>
+        </div>
+        <div class="choice-screen text-center not-displayed">
+            <h2>Mission</h2>
+            <p>Assemble your coworking <br> app, get it to the rocket and <br> launch it safely to the cloud!</p>
+            <button id="choiceGame" class="btn button-choice">I'm ready!</button><br>
+            <button id="choiceSkip" class="btn button-choice">Chicken Out!</button>
+        </div>
+    </div>
+
+
     <canvas id="demoCanvas" width="1920" height="1080">
     </canvas>
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.1/TweenMax.min.js"></script>-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/preload.js"></script>
 </body>
 </html>
 

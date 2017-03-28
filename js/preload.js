@@ -1,5 +1,24 @@
 var stage, preloadText, queue;
+//HTML EFFECTS
+document.querySelector('.logo').classList.add('transition-opacity', 'in-view');
+setTimeout(function(){
+    document.querySelector('.initial-text').classList.add('transition-opacity', 'in-view');
+},700);
+setTimeout(function(){
+    document.querySelector('.logo-screen').classList.add('transition-opacity', 'out-of-view');
+},2500);
+setTimeout(function(){
+    document.querySelector('.logo-screen').classList.add('not-displayed');
+    document.querySelector('.choice-screen').classList.remove('not-displayed');
+    document.querySelector('.choice-screen').classList.add('in-view');
+    document.querySelector('#choiceGame').addEventListener('click',function(){
+        document.querySelector('.choice-screen').classList.add('not-displayed');
+        preload();
+    });
+},4000);
 
+
+//START PRELOADING
 function preload(){
     console.log("preload started");
 
