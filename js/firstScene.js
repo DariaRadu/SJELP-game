@@ -2,7 +2,7 @@
  * Created by Daria on 02-Mar-17.
  */
 var modules, grid=[], boxModules=[];
-var gridWidth=220, gridHeight=112;
+var gridWidth=100, gridHeight=100;
 var spaceBetween, n=0, animation;
 
 function firstScene(){
@@ -37,18 +37,31 @@ function firstScene(){
         grid.push([]);
         for (col=0; col<modules[row].length; col++){
             switch(modules[row][col]){
+                case 0:
+                    img = "billing";
+                    break;
                 case 1:
-                    img = "module1";
+                    img = "community";
                     break;
                 case 2:
-                    img = "module2";
+                    img = "meetingRooms";
                     break;
                 case 3:
-                    img = "module3";
+                    img = "cafe";
                     break;
+                case 4:
+                    img = "machines";
+                    break;
+                case 5:
+                    img = "memberChat";
+                    break;
+
             }
 
             var t = new createjs.Sprite(sheet, img);
+
+            t.scaleX=0.25;
+            t.scaleY=0.25;
 
             t.row = row;
             t.col = col;
@@ -86,18 +99,17 @@ function addModules(){
         for (var col=0; col<grid[row].length;col++){
             var t = grid[row][col];
             t.addEventListener('click', moduleEffect);
-            }
         }
     }
-
+    stage.addChild(train, gun, trees, trees2);
 
 
 function moduleEffect(e){
-
     e.target.clicked++;
-    console.log(e.target.clicked)
-    //e.target.removeEventListener(e.type, arguments.callee);
-    /*e.target.addEventListener('click', removeModule);*/
+    console.log(e.target.clicked);
+    e.target.removeEventListener(e.type, arguments.callee);
+    e.target.cursor="default";
+    /*e.target.addEventListener('click', removeModule);
     if(e.target.clicked % 2 ==0){
         removeModule();
 
@@ -123,7 +135,7 @@ function moduleEffect(e){
             }
         }
 
-        stage.addChild(box);
+        stage.addChild(box, trees, trees2);
 
         createjs.
         Tween.
@@ -133,17 +145,25 @@ function moduleEffect(e){
             , 300,
             createjs.Ease.linear)
 
-    }
+    }*/
+
+        createjs.
+            Tween.
+            get(e.target).
+            to({
+                x:stage.canvas.width/2,
+                y:train.y},
+            1000, createjs.Ease.linear)
 
 
 }
 
-function removeModule(){
+/*function removeModule(){
     if (boxModules.length % 3 == 0){
         n--;
-    }
-    stage.removeChild( boxModules[boxModules.length-1]);
-    boxModules.splice( boxModules.length-1, 1 );
+    }*/
+    /*stage.removeChild( boxModules[boxModules.length-1]);
+    boxModules.splice( boxModules.length-1, 1 );*/
 
     /*e.target.removeEventListener(e.type, arguments.callee);
     e.target.addEventListener('click', moduleEffect);*/

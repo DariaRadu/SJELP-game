@@ -1,13 +1,13 @@
 /**
  * Created by Daria on 31-Jan-17.
  */
+var cloudA, cloudB, cloudA2, cloudB2, city, city2;
 var stage, bg, bg2, timeoutResize, startContainer, firstText;
 var skipButton, goButton;
 var train, gun, enemyShip, platform;
 var effectActive=false, moveStop=false, moveToRocket=false;
 var shots=[], enemyShots=[];
 var renderedTheFirstTime=false;
-var cloudA, cloudB, cloudA2, cloudB2;
 
 var controls={
     left:false,
@@ -63,8 +63,8 @@ function game(){
 
     stage.removeChild(firstText, skipButton,goButton);
 
-    createClouds();
-    backgroundOpacity(1);
+    /*createClouds();*/
+    //backgroundOpacity(1);
     createContent();
     resize();
 
@@ -113,7 +113,7 @@ function resize() {
         stage.canvas.height = window.innerHeight;
 
         // Background: full screen redraw
-        bg.graphics.clear();
+       /* bg.graphics.clear();
         bg.graphics.beginBitmapFill(bg.img, "no-repeat").drawRect(0, 0, bg.img.width, bg.img.height);
         bg.x=0;
 
@@ -125,7 +125,7 @@ function resize() {
         bg2.x=bg.x+stage.canvas.width;
 
         bg2.scaleX = parseFloat(stage.canvas.width / bg.img.width);
-        bg2.scaleY = parseFloat(stage.canvas.height / bg.img.height);
+        bg2.scaleY = parseFloat(stage.canvas.height / bg.img.height);*/
 
         resizeContent();
     },200);
@@ -134,16 +134,19 @@ function resize() {
 
 //BACKGROUND
 function createBackground() {
-    bg = new createjs.Shape();
+    createClouds();
+    createCity();
+    createTrees();
+    stage.addChild(cloudA, cloudA2, cloudB, cloudB2, city, city2);
+    /*bg = new createjs.Shape();
     bg.x=0;
     bg.img = queue.getResult('background');
 
     bg2 = new createjs.Shape();
     bg2.x=stage.canvas.width;
 
-
     stage.addChild(bg, bg2);
-
+*/
 }
 
 function createClouds(){
@@ -163,7 +166,26 @@ function createClouds(){
     cloudB2.x=stage.canvas.width;
     cloudB2.img=queue.getResult('cloudB');
 
-    stage.addChild(cloudA, cloudA2, cloudB, cloudB2);
+}
+
+function createCity(){
+    city = new createjs.Shape();
+    city.x=0;
+    city.img = queue.getResult('city');
+
+    city2 = new createjs.Shape();
+    city2.x=0;
+    city2.img = queue.getResult('city');
+}
+
+function createTrees(){
+    trees = new createjs.Shape();
+    trees.x=0;
+    trees.img = queue.getResult('trees');
+
+    trees2 = new createjs.Shape();
+    trees2.x=0;
+    trees2.img = queue.getResult('trees');
 
 }
 
@@ -171,31 +193,40 @@ function backgroundResize(bg){
     bg.graphics.clear();
     bg.graphics.beginBitmapFill(bg.img, "no-repeat").drawRect(0, 0, bg.img.width, bg.img.height);
 
-    bg.scaleX = parseFloat(stage.canvas.width / bg.img.width)/1.2;
-    bg.scaleY = parseFloat(stage.canvas.height / bg.img.height)/1.2;
+    bg.scaleX = parseFloat(stage.canvas.width / bg.img.width);
+    bg.scaleY = parseFloat(stage.canvas.height / bg.img.height);
 }
 
 function backgroundEffect(speed){
-    bg.x-=speed;
-    bg2.x-=speed;
-    if (bg.x<=-stage.canvas.width){
-        bg.x=bg2.x+stage.canvas.width;
+    city.x-=speed*0.5;
+    city2.x-=speed*0.5;
+    if (city.x<=-stage.canvas.width){
+         city.x=city2.x+stage.canvas.width;
     }
-    if (bg2.x<=-stage.canvas.width){
-        bg2.x=bg.x+stage.canvas.width;
+    if (city2.x<=-stage.canvas.width){
+        city2.x=city.x+stage.canvas.width;
+    }
+
+    trees.x-=speed;
+    trees2.x-=speed;
+    if (trees.x<=-stage.canvas.width){
+        trees.x=trees2.x+stage.canvas.width;
+    }
+    if (trees2.x<=-stage.canvas.width){
+        trees2.x=trees.x+stage.canvas.width;
     }
 }
 
-function backgroundOpacity(n){
+/*function backgroundOpacity(n){
     bg.alpha=n;
     bg2.alpha=n;
 
-    /*cloudA.alpha=n;
+    /!*cloudA.alpha=n;
     cloudA2.alpha=n;
 
     cloudB.alpha=n;
-    cloudB2.alpha=n;*/
-}
+    cloudB2.alpha=n;*!/
+}*/
 
 function cloudEffect(speed){
     cloudA.x-=0.3*speed;
@@ -221,17 +252,18 @@ function cloudEffect(speed){
 
 function createContent() {
 
-    train = new createjs.Shape();
-    train.width=400;
-    train.height=100;
-    train.graphics.beginFill("#ffe500").drawRect(0,0,train.width,train.height);
+    train = new createjs.Bitmap(queue.getResult("train"));
+    train.width=800;
+    train.height=300;
+    train.regX=train.width/2;
+    train.regY=train.height/2;
     train.speed=6;
 
-    platform = new createjs.Shape();
+   /* platform = new createjs.Shape();
     platform.width=500;
     platform.height=20;
     platform.graphics.beginFill("#ffe500").drawRect(0,0,platform.width,platform.height);
-
+*/
     gun = new createjs.Shape();
     gun.width=50;
     gun.height=50;
@@ -239,7 +271,7 @@ function createContent() {
     gun.regY=gun.height/2;
     gun.graphics.beginFill('red').drawRect(0,0,gun.width,gun.height);
 
-    stage.addChild(train, gun, platform)
+    stage.addChild(train, gun, platform, trees, trees2)
 
 }
 
@@ -260,6 +292,24 @@ function resizeContent(){
         cloudB2.x=stage.canvas.width+stage.canvas.width/4;
     }
 
+    if (city){
+        backgroundResize(city);
+        city.x=0;
+
+        backgroundResize(city2);
+        city2.x=stage.canvas.width;
+    }
+
+    if (trees){
+        backgroundResize(trees);
+        trees.x=0;
+        trees.y=30;
+
+        backgroundResize(trees2);
+        trees2.x=stage.canvas.width;
+        trees2.y=30;
+    }
+
     if (train){
         if (arrived || moveToRocket){
             train.x = stage.canvas.width / 2-150;
@@ -270,14 +320,14 @@ function resizeContent(){
     }
 
 
-    if (platform){
+    /*if (platform){
         platform.x=train.x-platform.width;
         platform.y=train.y+(train.height-platform.height);
     }
-
+*/
     if (gun){
-        gun.y=train.y-gun.height/2;
-        gun.x=train.x+train.width/2;
+        gun.y=train.y-train.height/2+gun.height+20;
+        gun.x=train.x;
     }
 
 
@@ -308,21 +358,21 @@ function resizeContent(){
                 t.y = stage.canvas.height / 3 * (row+0.5);
 
                 if (col == 0) {
-                    t.x = t.x + stage.canvas.width / 11;
+                    t.x = t.x + stage.canvas.width / 5;
                 }
                 if (col == modules[row].length - 1) {
-                    t.x = t.x - stage.canvas.width / 11;
+                    t.x = t.x - stage.canvas.width / 5;
                 }
 
                 if (row == 0) {
-                    t.y = t.y + stage.canvas.height / 11;
+                    t.y = t.y + stage.canvas.height / 7;
                 }
 
             }
         }
     }
 
-    if (boxModules.length>0){
+    /*if (boxModules.length>0){
         n=0;
         for (var i=0;i<boxModules.length;i++){
             var box=boxModules[i];
@@ -336,7 +386,7 @@ function resizeContent(){
             }
         }
 
-    }
+    }*/
 
     if (startContainer){
         buttonStart.x=window.innerWidth-buttonStart.width;

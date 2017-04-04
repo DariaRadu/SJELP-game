@@ -1,10 +1,13 @@
 {
-  "images":["img/train.jpg"],
-  "frames": {"width":220, "height":112},
+  "images":["img/modules.png"],
+  "frames": {"width":386, "height":380, "regX":193, "regY":190},
   "animations": {
-    "module1":[1],
-    "module2":[2],
-    "module3":[3]
+    "billing":[0],
+    "community":[1],
+    "meetingRooms":[2],
+    "cafe":[3],
+    "machines":[4],
+    "memberChat":[5]
   }
 
 }

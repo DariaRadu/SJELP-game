@@ -20,20 +20,20 @@ function moveTrain(){
     if (controls.left && train.x>=0){
         train.x-=train.speed;
         gun.x-=train.speed;
-        platform.x-=train.speed;
-        for (var i=0;i<boxModules.length;i++) {
+        //platform.x-=train.speed;
+       /* for (var i=0;i<boxModules.length;i++) {
             var box = boxModules[i];
             box.x -= train.speed;
-        }
+        }*/
     }
     if (controls.right){
         train.x+=train.speed;
         gun.x+=train.speed;
-        platform.x+=train.speed;
-        for (i=0;i<boxModules.length;i++) {
+        //platform.x+=train.speed;
+        /*for (i=0;i<boxModules.length;i++) {
             box = boxModules[i];
             box.x += train.speed;
-        }
+        }*/
     }
 }
 

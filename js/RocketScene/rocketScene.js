@@ -18,14 +18,14 @@ function goToRocket(){
         rocket.x=stage.canvas.width+300;
         rocket.y=stage.canvas.height/2;
 
-       /* fire = new createjs.Shape();
+        fire = new createjs.Shape();
         fire.width = 50;
         fire.height = 70;
         fire.regX=fire.width/2;
         fire.regY=fire.height/2;
         fire.graphics.beginFill('orange').drawRect(0,0,fire.width,fire.height);
         fire.x=rocket.x;
-        fire.y=rocket.y+rocket.height/2+fire.height/2;*/
+        fire.y=rocket.y+rocket.height/2+fire.height/2;
 
         stage.addChild(rocket);
         initial=false;
@@ -37,22 +37,22 @@ function goToRocket(){
             if (train.x <= stage.canvas.width / 2-150) {
                 train.x += train.speed/2;
                 gun.x += train.speed/2;
-                platform.x += train.speed/2;
+                /*platform.x += train.speed/2;
                 for (var i=0;i<boxModules.length;i++) {
                     var box = boxModules[i];
                     box.x += train.speed/2;
-                }
+                }*/
             }else if (stage.canvas.width/2-150-train.x<=6 && stage.canvas.width/2-150-train.x>=-6){
                     arrived=true;
                     effectActive=true;
             }else{
                 train.x -= train.speed/2;
                 gun.x -= train.speed/2;
-                platform.x -= train.speed/2;
+                /*platform.x -= train.speed/2;
                 for (i=0;i<boxModules.length;i++) {
                     box = boxModules[i];
                     box.x -= train.speed / 2;
-                }
+                }*/
             }
                 backgroundEffect(3);
                 cloudEffect(3);
@@ -128,6 +128,15 @@ function buttonLaunch(){
     buttonContainer.cursor = "pointer";
 
     buttonContainer.addEventListener('click', function() {
+        var fireSheet = new createjs.SpriteSheet(queue.getResult("fireSprite"));
+        var fire = new createjs.Sprite(fireSheet, 'fire');
+        fire.scaleX=0.2;
+        fire.scaleY=0.2;
+        fire.x=rocket.x;
+        fire.y=rocket.y+rocket.height/2;
+
+        stage.addChild(fire);
+
         shake(rocket);
     });
 

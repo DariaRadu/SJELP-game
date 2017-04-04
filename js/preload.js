@@ -13,6 +13,7 @@ setTimeout(function(){
     document.querySelector('.choice-screen').classList.add('in-view');
     document.querySelector('#choiceGame').addEventListener('click',function(){
         document.querySelector('.choice-screen').classList.add('not-displayed');
+        document.querySelector('#demoCanvas').classList.remove('not-displayed');
         preload();
     });
 },4000);
@@ -38,10 +39,15 @@ function preload(){
     queue.loadManifest([
         {id:"background", src:"img/background.png"},
         {id:"explosionSprite", src:"json/explosionSprite.json"},
+        {id:"fireSprite",src:"json/flames.json"},
         {id:"moduleSprites", src:"json/moduleSprite.json"},
         {id:"modules", src:"json/modules.json"},
-        {id:"cloudA", src:"img/cloud-a.png"},
-        {id:"cloudB", src:"img/cloud-b.png"},
+        {id:"cloudA", src:"img/cloudsA.png"},
+        {id:"cloudB", src:"img/cloudsB.png"},
+        {id:"city", src:"img/city.png"},
+        {id:"trees", src:"img/trees.png"},
+        {id:"train", src:"img/train.png"},
+        {id:"spaceship", src:"img/ufo.png"},
         {id:"heart", src:"img/heart.png"},
         {id:"skip", src:"img/skip.png"},
         {id:"go", src:"img/go.png"},

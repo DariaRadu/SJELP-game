@@ -5,10 +5,9 @@
 function shootingScene(){
     window.addEventListener("keydown", moveOrShootControls);
     window.addEventListener("keyup", resetControls);
-    enemyShip = new createjs.Shape();
-    enemyShip.width=300;
-    enemyShip.height=100;
-    enemyShip.graphics.beginFill('gray').drawRect(0,0,enemyShip.width,enemyShip.height);
+    enemyShip = new createjs.Bitmap(queue.getResult("spaceship"));
+    enemyShip.width=350;
+    enemyShip.height=150;
     enemyShip.regX=enemyShip.width/2;
     enemyShip.regY=enemyShip.height/2;
     enemyShip.x=window.innerWidth/2;
