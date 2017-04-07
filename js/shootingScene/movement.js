@@ -98,7 +98,7 @@ function moveEnemyShots(){
         if( shot.y > stage.canvas.height) {
             removeShot( shot , enemyShots);
         }
-        if(hitTest2(train, shot) || hitTest2(gun, shot) ){
+        if(hitTest1(train, shot) || hitTest2(gun, shot) ){
             removeShot( shot , enemyShots);
             train.alpha=0.9;
             setTimeout(function(){

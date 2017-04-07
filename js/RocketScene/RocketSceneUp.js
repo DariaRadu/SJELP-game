@@ -8,7 +8,7 @@ var logo, cloudBig;
 function UpScene() {
     var margin = 40;
     stage.removeAllChildren();
-    stage.addChild(cloudA, cloudA2, cloudB, cloudB2, rocket);
+    stage.addChild(cloudA, cloudA2, cloudB, cloudB2, rocket, fire);
     stage.update();
     cloudA.y = cloudA.y + margin;
     cloudA2.y = cloudA2.y + margin;
@@ -17,6 +17,14 @@ function UpScene() {
 
     rocket.x=stage.canvas.width/2;
     rocket.y = stage.canvas.height+1000;
+
+    fire.x=stage.canvas.width/2-32;
+    fire.y = stage.canvas.height+rocket.height/2+1000;
+
+    createjs.Tween.get(fire).to({
+        y:-1000+rocket.height/2
+    }, 2000, createjs.Ease.linear);
+
     createjs.Tween.get(rocket).to({
         y:-1000
         }, 2000, createjs.Ease.linear)
@@ -25,6 +33,12 @@ function UpScene() {
 
 function UpScene2(){
     rocket.y = stage.canvas.height+1000;
+    fire.y= stage.canvas.height+rocket.height/2+1000;
+
+    createjs.Tween.get(fire).to({
+        y:-1000+rocket.height/2
+    }, 2000, createjs.Ease.linear);
+
     createjs.Tween.get(rocket).to({
         y:-1000
     }, 2000, createjs.Ease.linear)

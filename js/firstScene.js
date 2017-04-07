@@ -1,9 +1,9 @@
 /**
  * Created by Daria on 02-Mar-17.
  */
-var modules, grid=[], boxModules=[];
+var modules, grid=[], boxModules=[], modulesAdded=[];
 var gridWidth=100, gridHeight=100;
-var spaceBetween, n=0, animation;
+var spaceBetween, n=0, animation, modulesCounter=0;
 
 function firstScene(){
     var row, col, img;
@@ -85,6 +85,7 @@ function firstScene(){
 
             t.clicked=0;
             t.cursor = "pointer";
+            t.moduleAdded=0;
 
             grid[row].push(t);
             stage.addChild(t);
@@ -98,13 +99,19 @@ function addModules(){
     for (var row=0;row<grid.length;row++){
         for (var col=0; col<grid[row].length;col++){
             var t = grid[row][col];
-            t.addEventListener('click', moduleEffect);
+            if (!t.moduleAdded){
+                t.addEventListener('click', moduleEffect);
+                t.moduleAdded=1;
+            }
+
         }
     }
     stage.addChild(train, gun, trees, trees2);
 
 
 function moduleEffect(e){
+    //modulesCounter++;
+    //console.log(modulesCounter);
     e.target.clicked++;
     console.log(e.target.clicked);
     e.target.removeEventListener(e.type, arguments.callee);
@@ -152,10 +159,12 @@ function moduleEffect(e){
             get(e.target).
             to({
                 x:stage.canvas.width/2,
-                y:train.y},
-            1000, createjs.Ease.linear)
+                y:train.y,
+                scaleX:0.14,
+                scaleY:0.14},
+            1000, createjs.Ease.linear);
 
-
+    modulesAdded.push(e.target);
 }
 
 /*function removeModule(){
@@ -170,27 +179,28 @@ function moduleEffect(e){
 }
 
 function goToSpaceship(){
-    for (var row=0;row<grid.length;row++){
-        for (var col=0;col<grid[row].length;col++){
-            let t=grid[row][col];
-            createjs.
-            Tween.
-            get(t).
-            to({
-                    alpha:0}
-                , 300,
-                createjs.Ease.linear)
-            .call(function(){
-                    stage.removeChild(t, startContainer);
-                    animation=1;
-                    setTimeout(function(){
-                        animation=0;
-                        effectActive=1;
+    if (modulesAdded.length>0){
+        for (var row=0;row<grid.length;row++){
+            for (var col=0;col<grid[row].length;col++){
+                let t=grid[row][col];
+                createjs.
+                Tween.
+                get(t).
+                to({
+                        alpha:0}
+                    , 300,
+                    createjs.Ease.linear)
+                    .call(function(){
+                        stage.removeChild(t, startContainer);
+                        animation=1;
+                        setTimeout(function(){
+                            animation=0;
+                            effectActive=1;
 
-                    },3000);
-                })
+                        },3000);
+                    })
+            }
         }
+        setTimeout(shootingScene, 3000)
     }
-    setTimeout(shootingScene, 3000)
-
 }

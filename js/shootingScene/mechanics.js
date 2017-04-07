@@ -38,12 +38,12 @@ function shootingScene(){
 
 
 function shoot(){
-    var shot = new createjs.Shape();
-    shot.graphics.beginFill("#ff9d18");
-    shot.graphics.drawRect(0,0,10,10);
+    var shot = new createjs.Bitmap(queue.getResult("shot"));
+    /*shot.graphics.beginFill("#ff9d18");
+    shot.graphics.drawRect(0,0,10,10);*/
     shot.width = 10;
     shot.height = 10;
-    shot.x = train.x+train.width/2-shot.width/2;
+    shot.x = gun.x-shot.width/2;
     shot.y = gun.y-gun.width/2;
     shot.speed = 8;
 
@@ -70,9 +70,9 @@ function explode(){
 }
 
 function enemyShoot(){
-    var shot = new createjs.Shape();
-    shot.graphics.beginFill("#ff6100");
-    shot.graphics.drawRect(0,0,10,10);
+    var shot = new createjs.Bitmap(queue.getResult("shot2"));
+    /*shot.graphics.beginFill("#ff6100");
+    shot.graphics.drawRect(0,0,10,10);*/
     shot.width = 10;
     shot.height = 10;
     shot.x = enemyShip.x-shot.width/2;

@@ -1,7 +1,7 @@
 /**
  * Created by Daria on 31-Jan-17.
  */
-var cloudA, cloudB, cloudA2, cloudB2, city, city2;
+var cloudA, cloudB, cloudA2, cloudB2, city, city2, mountain, mountain2;
 var stage, bg, bg2, timeoutResize, startContainer, firstText;
 var skipButton, goButton;
 var train, gun, enemyShip, platform;
@@ -135,9 +135,10 @@ function resize() {
 //BACKGROUND
 function createBackground() {
     createClouds();
+    createMountains();
     createCity();
     createTrees();
-    stage.addChild(cloudA, cloudA2, cloudB, cloudB2, city, city2);
+    stage.addChild(cloudA, cloudA2, cloudB, cloudB2, mountain, mountain2, city, city2);
     /*bg = new createjs.Shape();
     bg.x=0;
     bg.img = queue.getResult('background');
@@ -155,7 +156,7 @@ function createClouds(){
     cloudA.img=queue.getResult('cloudA');
 
     cloudA2 = new createjs.Shape();
-    cloudA2.x=0;
+    cloudA2.x=stage.canvas.width;
     cloudA2.img=queue.getResult('cloudA');
 
     cloudB = new createjs.Shape();
@@ -166,6 +167,16 @@ function createClouds(){
     cloudB2.x=stage.canvas.width;
     cloudB2.img=queue.getResult('cloudB');
 
+}
+
+function createMountains(){
+    mountain = new createjs.Shape();
+    mountain.x=0;
+    mountain.img=queue.getResult('mountain');
+
+    mountain2 = new createjs.Shape();
+    mountain2.x=stage.canvas.width;
+    mountain2.img=queue.getResult('mountain');
 }
 
 function createCity(){
@@ -182,10 +193,14 @@ function createTrees(){
     trees = new createjs.Shape();
     trees.x=0;
     trees.img = queue.getResult('trees');
+    trees.scaleX=1.5;
+    trees.scaleY=1.5;
 
     trees2 = new createjs.Shape();
     trees2.x=0;
     trees2.img = queue.getResult('trees');
+    trees2.scaleX=1.5;
+    trees2.scaleY=1.5;
 
 }
 
@@ -198,8 +213,8 @@ function backgroundResize(bg){
 }
 
 function backgroundEffect(speed){
-    city.x-=speed*0.5;
-    city2.x-=speed*0.5;
+    city.x-=speed*0.8;
+    city2.x-=speed*0.8;
     if (city.x<=-stage.canvas.width){
          city.x=city2.x+stage.canvas.width;
     }
@@ -214,6 +229,15 @@ function backgroundEffect(speed){
     }
     if (trees2.x<=-stage.canvas.width){
         trees2.x=trees.x+stage.canvas.width;
+    }
+
+    mountain.x-=speed*0.5;
+    mountain2.x-=speed*0.5;
+    if (mountain.x<=-stage.canvas.width){
+        mountain.x=mountain2.x+stage.canvas.width;
+    }
+    if (mountain2.x<=-stage.canvas.width){
+        mountain2.x=mountain.x+stage.canvas.width;
     }
 }
 
@@ -253,23 +277,22 @@ function cloudEffect(speed){
 function createContent() {
 
     train = new createjs.Bitmap(queue.getResult("train"));
-    train.width=800;
-    train.height=300;
+    train.width=400;
+    train.height=75;
     train.regX=train.width/2;
     train.regY=train.height/2;
     train.speed=6;
-
    /* platform = new createjs.Shape();
     platform.width=500;
     platform.height=20;
     platform.graphics.beginFill("#ffe500").drawRect(0,0,platform.width,platform.height);
 */
-    gun = new createjs.Shape();
+    gun = new createjs.Bitmap(queue.getResult("gun"));
     gun.width=50;
     gun.height=50;
     gun.regX=gun.width/2;
     gun.regY=gun.height/2;
-    gun.graphics.beginFill('red').drawRect(0,0,gun.width,gun.height);
+    //gun.graphics.beginFill('red').drawRect(0,0,gun.width,gun.height);
 
     stage.addChild(train, gun, platform, trees, trees2)
 
@@ -290,6 +313,14 @@ function resizeContent(){
 
         backgroundResize(cloudB2);
         cloudB2.x=stage.canvas.width+stage.canvas.width/4;
+    }
+
+    if (mountain){
+        backgroundResize(mountain);
+        mountain.x=0;
+
+        backgroundResize(mountain2);
+        mountain2.x=stage.canvas.width;
     }
 
     if (city){
@@ -316,7 +347,7 @@ function resizeContent(){
         }else{
             train.x=stage.canvas.width/2;
         }
-        train.y=stage.canvas.height-(stage.canvas.height/5);
+        train.y=stage.canvas.height-(stage.canvas.height/6.7);
     }
 
 
@@ -326,7 +357,7 @@ function resizeContent(){
     }
 */
     if (gun){
-        gun.y=train.y-train.height/2+gun.height+20;
+        gun.y=train.y-train.height+gun.height/2;
         gun.x=train.x;
     }
 
@@ -337,7 +368,7 @@ function resizeContent(){
     }
 
     if (rocket){
-        rocket.y=stage.canvas.height/2;
+        rocket.y=stage.canvas.height/2+50;
         rocket.x=4*stage.canvas.width/5;
     }
 

@@ -1,7 +1,7 @@
 /**
  * Created by Daria on 21-Feb-17.
  */
-var rocket, button, buttonText, buttonContainer;
+var rocket, button, buttonText, buttonContainer, fire;
 var initial=true, launchButton=false, arrived=false;
 var counter=-1;
 
@@ -9,23 +9,23 @@ function goToRocket(){
     if (initial){
         effectActive=false;
         moveToRocket=true;
-        rocket = new createjs.Shape();
-        rocket.width=200;
-        rocket.height=500;
+        rocket = new createjs.Bitmap(queue.getResult("rocket"));
+        rocket.width=300;
+        rocket.height=400;
         rocket.regX=rocket.width/2;
         rocket.regY=rocket.height/2;
-        rocket.graphics.beginFill('red').drawRect(0,0,rocket.width,rocket.height);
+       /* rocket.graphics.beginFill('red').drawRect(0,0,rocket.width,rocket.height);*/
         rocket.x=stage.canvas.width+300;
-        rocket.y=stage.canvas.height/2;
+        rocket.y=stage.canvas.height/2+80;
 
-        fire = new createjs.Shape();
+        /*fire = new createjs.Shape();
         fire.width = 50;
         fire.height = 70;
         fire.regX=fire.width/2;
         fire.regY=fire.height/2;
         fire.graphics.beginFill('orange').drawRect(0,0,fire.width,fire.height);
         fire.x=rocket.x;
-        fire.y=rocket.y+rocket.height/2+fire.height/2;
+        fire.y=rocket.y+rocket.height/2+fire.height/2;*/
 
         stage.addChild(rocket);
         initial=false;
@@ -80,29 +80,47 @@ function goToRocket(){
 
 }
 
-function shake(target){
+function shake(target1, target2){
     var rocketLaunchSound = new createjs.Sound.play("rocketLaunchSound");
     rocketLaunchSound.setVolume(0.5);
 
     createjs.
     Tween.
-    get(target).
+    get(target1).
     to({
-        y:target.y-200}
+        y:target1.y-200}
         , 2500,
         createjs.Ease.bounceInOut
     ).call(function(){
         createjs.
         Tween.
-        get(target).
+        get(target1).
         to({
-                y:target.y-1000}
+            y:target1.y-1000}
             , 1000,
             createjs.Ease.linear)
             .call(function(){
                 setTimeout(UpScene(),500);
             })
     });
+
+    createjs.
+     Tween.
+     get(target2).
+     to({
+        y:target2.y-200}
+        , 2500,
+        createjs.Ease.bounceInOut
+     ).call(function(){
+         createjs.
+         Tween.
+         get(target2).
+         to({
+            y:target2.y-1000}
+            , 1000,
+         createjs.Ease.linear)
+
+     });
 
 }
 
@@ -129,34 +147,59 @@ function buttonLaunch(){
 
     buttonContainer.addEventListener('click', function() {
         var fireSheet = new createjs.SpriteSheet(queue.getResult("fireSprite"));
-        var fire = new createjs.Sprite(fireSheet, 'fire');
-        fire.scaleX=0.2;
-        fire.scaleY=0.2;
-        fire.x=rocket.x;
+        fire = new createjs.Sprite(fireSheet, 'fire');
+        fire.scaleX=0.5;
+        fire.scaleY=0.5;
+        fire.x=rocket.x-32;
         fire.y=rocket.y+rocket.height/2;
 
         stage.addChild(fire);
 
-        shake(rocket);
+        shake(rocket, fire);
     });
 
 }
 
 function moveBoxes(){
-    if (counter<boxModules.length){
+    /*for(var i=0;i<grid.length;i++){
+        for (var j=0; j<grid[i].length;j++){
+            if (grid[i][j].clicked>0){
+                stage.addChild(grid[i][j]);
+                createjs.
+                Tween.
+                get(grid[i][j]).
+                to({
+                        y:rocket.y,
+                        x:rocket.x,
+                        alpha:1}
+                    , 1000,
+                    createjs.Ease.linear)
+                    .call(function(){
+                        stage.removeChild(grid[i][j]);
+                        //counter+=1;
+                        //moveBoxes();
+                    })
+            }
+        }*/
+
+
+    if (counter<modulesAdded.length){
+        modulesAdded[counter].alpha=1;
+        stage.addChild(modulesAdded[counter], train, gun, rocket);
         createjs.
         Tween.
-        get(boxModules[boxModules.length-counter-1]).
+        get(modulesAdded[counter]).
         to({
                 y:rocket.y,
                 x:rocket.x}
             , 1000,
             createjs.Ease.linear)
             .call(function(){
-                stage.removeChild(boxModules[boxModules.length-counter-1]);
+                stage.removeChild(modulesAdded[counter]);
                 counter+=1;
                 moveBoxes();
-            })
+            });
+
     }else{
        //if(!launchButton){
             buttonLaunch();
